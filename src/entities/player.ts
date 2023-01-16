@@ -1,7 +1,7 @@
 import { WebSocket } from "ws";
 import { v4 as uuid } from "uuid";
 
-export class Client {
+export class Player {
     uuid: string;
     ws: WebSocket;
     name: string;
