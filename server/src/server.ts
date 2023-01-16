@@ -1,7 +1,8 @@
 import express from "express";
 import path from "path";
+import "dotenv/config";
 
-const port = 3000;
+const port = process.env.PORT;
 const app = express();
 
 app.use(express.static(path.join(__dirname, "../views")));
