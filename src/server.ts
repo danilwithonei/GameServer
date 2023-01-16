@@ -1,16 +1,39 @@
 import WebSocket from "ws";
+import express from "express";
+import bodyParser from "body-parser";
 import "dotenv/config";
 import { Client } from "./entities/client";
 import { ServerServices } from "./services/server.services";
 import { Room } from "./entities/room";
 
-const server = new WebSocket.Server({ port: Number(3000) }, () => {
-    console.log(`### Server started on port! ${3000}`);
+const port = 4000;
+const app = express();
+
+app.engine("html", require("ejs").renderFile);
+app.use(bodyParser({ extended: false }));
+
+app.get("/", (req, res) => {
+    res.render("startPage.html");
+});
+app.post("/lobbies", (req, res) => {
+    console.log(req.body);
+    res.render("startPage.html");
+});
+
+app.listen(port, () => {
+    console.log(`server started at http://localhost:${port}`);
+});
+
+const server = new WebSocket.Server({ port: Number(5000) }, () => {
+    console.log(`### Server started on port! ${5000}`);
 });
 const services = new ServerServices(server);
 
 server.on("connection", (ws) => {
-    services.clients.push(new Client(ws));
+    const newClient = new Client(ws);
+    console.log(`new client ${newClient.uuid} connected`);
+    services.clients.push(newClient);
+
     ws.on("message", (msg) => {
         const jsonMsg = JSON.parse(msg.toString("utf-8"));
         const client = services.getOneByWs(ws);
