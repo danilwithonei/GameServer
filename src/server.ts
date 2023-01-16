@@ -4,17 +4,17 @@ import path from "path";
 const port = 3000;
 const app = express();
 
-app.use(express.static(path.join(__dirname, "../public")));
+app.use(express.static(path.join(__dirname, "../views")));
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "../public/views/startPage.html"));
+    res.sendFile(path.join(__dirname, "../views/startPage.html"));
 });
 
 app.post("/lobbies", (req, res) => {
     console.log(req.body);
     //TODO: get lobbies and send their
-    res.sendFile(path.join(__dirname, "../public/views/lobbiesPage.html"));
+    res.sendFile(path.join(__dirname, "../views/lobbiesPage.html"));
 });
 
 app.listen(port, () => {
