@@ -16,12 +16,15 @@ export class ServerServices {
     createClient(name: string) {
         const client = new Client(name);
         this.clients.push(client);
+        console.log(`Clients: ${this.clients.length}`);
+
         return client;
     }
 
     getOnline(): number {
         return this.players.length;
     }
+
     getAllXYExept(ws: WebSocket): string {
         const allXY: string[] = [];
         // исправить что бы цикл был по uuid players у комнаты
@@ -39,6 +42,7 @@ export class ServerServices {
             if (client.readyState === WebSocket.OPEN) client.send(msg);
         });
     }
+
     sendAllExept(ws: WebSocket) {
         const allXY = this.getAllXYExept(ws);
         this.getOneByWs(ws).ws.send(allXY);
@@ -60,13 +64,23 @@ export class ServerServices {
         return roomNames;
     }
 
-    getClients(ws: WebSocket) {
+    getClientsNames(ws: WebSocket) {
         return this.clients.map((client) => {
             if (client.ws !== ws) return client.name;
         });
     }
 
+    setWs(ws: WebSocket, id: string) {
+        const client = this.getClientById(id);
+        client.ws = ws;
+        return client;
+    }
+
     getRoomByName(name: string): Room {
         return this.rooms.filter((r) => r.name === name)[0];
+    }
+
+    getClientById(id: string) {
+        return this.clients.filter((c) => c.id == id)[0];
     }
 }

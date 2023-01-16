@@ -4,6 +4,7 @@ import "dotenv/config";
 import { Player } from "./entities/player";
 import { ServerServices } from "./services/server.services";
 import { Room } from "./entities/room";
+import { app } from "./expressServer";
 
 const server = new WebSocket.Server({ port: Number(5000) }, () => {
     console.log(`### Server started on port! ${5000}`);
@@ -17,9 +18,10 @@ server.on("connection", (ws) => {
     // services.players.push(newPlayer);
 
     ws.on("message", (msg) => {
-        const data = msg.toString("utf-8").split("_")[0];
+        const command = msg.toString("utf-8").split("_")[0];
+        const data = msg.toString("utf-8").split("_")[1];
         // const client = services.getOneByWs(ws);
-        switch (data) {
+        switch (command) {
             case "setUsername": {
                 // client.setName(jsonMsg["username"]);
                 break;
@@ -37,8 +39,13 @@ server.on("connection", (ws) => {
                 break;
             }
             case "getClients": {
-                const clientsNames = services.getClients(ws);
+                const client = services.getClientById(data);
+                const clientsNames = services.getClientsNames(client.ws);
                 client.sendSelf(JSON.stringify(`clientsNames_${clientsNames}`));
+                break;
+            }
+            case "setClient": {
+                services.setWs(ws, data);
                 break;
             }
             case "go": {
@@ -60,4 +67,8 @@ server.on("connection", (ws) => {
         const client = services.getOneByWs(ws);
         services.players = services.players.filter((c) => c.ws !== ws);
     });
+});
+
+app.listen(3000, () => {
+    console.log(`server started at http://localhost:${3000}`);
 });

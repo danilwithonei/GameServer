@@ -4,7 +4,7 @@ import "dotenv/config";
 import { AuthController } from "./controllers/auth.controller";
 
 const port = process.env.PORT;
-const app = express();
+export const app = express();
 
 app.use(express.static(path.join(__dirname, "../views")));
 app.use(express.urlencoded({ extended: true }));
@@ -17,12 +17,4 @@ app.get("/", (req, res) => {
 
 app.post("/lobbies", (req, res) => {
     controller.createClient(req, res);
-});
-
-app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "../views/startPage.html"));
-});
-
-app.listen(port, () => {
-    console.log(`server started at http://localhost:${port}`);
 });

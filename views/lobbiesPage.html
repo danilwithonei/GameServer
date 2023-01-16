@@ -9,10 +9,21 @@
         <h1>lobbies</h1>
     </body>
     <script>
-        const ws = new WebSocket("ws://localhost:3001");
-        ws.on("message", (msg) => {
-            const data = msg.toString("utf-8").split("_")[0];
-            console.log(data);
-        });
+        const ws = new WebSocket("ws://localhost:5000");
+
+        onload = function () {
+            const id = document.cookie.split("=")[1];
+            ws.send(`setClient_${id}`);
+            ws.send(`getClients_${id}`);
+            console.log(id);
+        };
+
+        ws.onmessage = (res) => {
+            console.log("!!!!!!!!!!!!!!!!");
+
+            const response = JSON.parse(res.data);
+            const message = response.message;
+            console.log(message);
+        };
     </script>
 </html>
