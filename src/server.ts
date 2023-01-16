@@ -1,22 +1,22 @@
-import express from "express"
-import path from "path"
+import express from "express";
+import path from "path";
 
-const port = 3000
-const app = express()
+const port = 3000;
+const app = express();
 
-app.use(express.static(path.join(__dirname, "../public")))
-app.use(express.urlencoded({ extended: true }))
+app.use(express.static(path.join(__dirname, "../public")));
+app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../public/views/startPage.html"))
-})
+    res.sendFile(path.join(__dirname, "../public/views/startPage.html"));
+});
 
 app.post("/lobbies", (req, res) => {
-  console.log(req.body)
-  //TODO: get lobbies and send their
-  res.sendFile(path.join(__dirname, "../public/views/lobbiesPage.html"))
-})
+    console.log(req.body);
+    //TODO: get lobbies and send their
+    res.sendFile(path.join(__dirname, "../public/views/lobbiesPage.html"));
+});
 
 app.listen(port, () => {
-  console.log(`server started at http://localhost:${port}`)
-})
+    console.log(`server started at http://localhost:${port}`);
+});
