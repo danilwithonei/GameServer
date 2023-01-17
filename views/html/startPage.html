@@ -4,14 +4,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Start</title>
+    <!-- <script src="../js/index.js"></script> -->
 </head>
 <body>
     <body>
-        <h1>Enter name</h1>
-        <input name="username" type="text" class="validate" />
-        <label for="username">Имя</label>
-        <button id="btn-create-lobby">Create lobby</button>
-        <form action="/lobby/join" method="post">
+        <form method="post">
+            <h1>Enter name</h1>
+            <input id="username" name="username" type="text" class="validate" />
+            <label for="username">Имя</label>
+            <button formaction="/lobby/create">Create lobby</button>
             <button>Join to lobby</button>
         </form>
     </body>
