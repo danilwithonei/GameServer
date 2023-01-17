@@ -1,14 +1,17 @@
 import WebSocket from "ws";
-
 import "dotenv/config";
 import { Player } from "./entities/player";
 import { ServerServices } from "./services/server.services";
 import { Room } from "./entities/room";
 import { app } from "./expressServer";
 
-const server = new WebSocket.Server({ port: Number(5000) }, () => {
-    console.log(`### Server started on port! ${5000}`);
+const expressPort = process.env.EXPRESS_PORT;
+const socketPort = process.env.SOCKET_PORT;
+
+const server = new WebSocket.Server({ port: +socketPort }, () => {
+    console.log(`### Server started on port! ${socketPort} ###`);
 });
+
 export const services = new ServerServices(server);
 
 server.on("connection", (ws) => {
@@ -69,6 +72,6 @@ server.on("connection", (ws) => {
     });
 });
 
-app.listen(3000, () => {
-    console.log(`server started at http://localhost:${3000}`);
+app.listen(expressPort, () => {
+    console.log(`### Express server started at http://localhost:${expressPort} ###`);
 });

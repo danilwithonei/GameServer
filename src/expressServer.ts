@@ -1,20 +1,14 @@
 import express from "express";
 import path from "path";
 import "dotenv/config";
-import { AuthController } from "./controllers/auth.controller";
+import { router as enterRouter } from "./routers/enterRouter";
 
-const port = process.env.PORT;
 export const app = express();
 
 app.use(express.static(path.join(__dirname, "../views")));
 app.use(express.urlencoded({ extended: true }));
-
-const controller = new AuthController();
+app.use("/lobbies", enterRouter);
 
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "../views/startPage.html"));
-});
-
-app.post("/lobbies", (req, res) => {
-    controller.createClient(req, res);
 });
