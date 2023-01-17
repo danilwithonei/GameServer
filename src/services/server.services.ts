@@ -2,6 +2,7 @@ import { Player } from "../entities/player";
 import { Room } from "../entities/room";
 import WebSocket from "ws";
 import { Client } from "../entities/client";
+import { IMessage } from "../interfaces";
 
 export class ServerServices {
     private server: WebSocket.Server<WebSocket.WebSocket>;
@@ -12,7 +13,6 @@ export class ServerServices {
     constructor(server: WebSocket.Server<WebSocket.WebSocket>) {
         this.server = server;
     }
-
     createClient(name: string) {
         const client = new Client(name);
         this.clients.push(client);
@@ -37,9 +37,9 @@ export class ServerServices {
         return allXY.toString();
     }
 
-    sendAll(msg: string) {
+    sendAll(msg: IMessage) {
         this.server.clients.forEach((client) => {
-            if (client.readyState === WebSocket.OPEN) client.send(msg);
+            if (client.readyState === WebSocket.OPEN) client.send(JSON.stringify(msg));
         });
     }
 
@@ -64,10 +64,8 @@ export class ServerServices {
         return roomNames;
     }
 
-    getClientsNames(ws: WebSocket) {
-        return this.clients.map((client) => {
-            if (client.ws !== ws) return client.name;
-        });
+    getClientsNames() {
+        return this.clients.map((client) => client.name);
     }
 
     setWs(ws: WebSocket, id: string) {

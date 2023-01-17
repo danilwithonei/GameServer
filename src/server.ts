@@ -43,10 +43,9 @@ server.on("connection", (ws) => {
                 break;
             }
             case "getClients": {
-                const client = services.getClientById(data);
-                const clientsNames = services.getClientsNames(client.ws);
+                const clientsNames = services.getClientsNames();
+                services.sendAll({ type: messageCase.clientsNames, data: clientsNames });
 
-                client.sendSelf({ type: messageCase.clientsNames, data: clientsNames });
                 break;
             }
             case "setClient": {
@@ -72,6 +71,8 @@ server.on("connection", (ws) => {
         // const client = services.getOneByWs(ws);
         // services.players = services.players.filter((c) => c.ws !== ws);
         services.clients = services.clients.filter((c) => c.ws != ws);
+        const clientsNames = services.getClientsNames();
+        services.sendAll({ type: messageCase.clientsNames, data: clientsNames });
     });
 });
 

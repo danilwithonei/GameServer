@@ -21,6 +21,7 @@ onload = function () {
 
 function showClientsNames(names) {
     const parent = document.getElementById("clients");
+    parent.replaceChildren();
 
     for (const name of names) {
         const child = document.createElement("div");
