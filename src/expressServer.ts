@@ -7,7 +7,7 @@ export const app = express();
 
 app.use(express.static(path.join(__dirname, "../views")));
 app.use(express.urlencoded({ extended: true }));
-app.use("/lobbies", enterRouter);
+app.use("/clients", enterRouter);
 
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "../views/startPage.html"));

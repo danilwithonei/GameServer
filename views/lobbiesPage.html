@@ -6,7 +6,7 @@
         <title>Document</title>
     </head>
     <body>
-        <h1>lobbies</h1>
+        <h1>Clients</h1>
     </body>
     <script>
         const ws = new WebSocket("ws://localhost:5000");
@@ -19,11 +19,8 @@
         };
 
         ws.onmessage = (res) => {
-            console.log("!!!!!!!!!!!!!!!!");
-
             const response = JSON.parse(res.data);
-            const message = response.message;
-            console.log(message);
+            console.log(response);
         };
     </script>
 </html>
