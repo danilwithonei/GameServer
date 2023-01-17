@@ -8,10 +8,11 @@
 <body>
     <body>
         <h1>Enter name</h1>
-        <form action="/clients" method="post">
-            <input name="username" type="text" class="validate" />
-            <label for="username">Имя</label>
-          <button>Вход</button>
+        <input name="username" type="text" class="validate" />
+        <label for="username">Имя</label>
+        <button id="btn-create-lobby">Create lobby</button>
+        <form action="/lobby/join" method="post">
+            <button>Join to lobby</button>
         </form>
     </body>
 </html>

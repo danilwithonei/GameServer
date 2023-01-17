@@ -13,10 +13,19 @@ const send = function (data) {
 onload = function () {
     const id = document.cookie.split("=")[1];
     send(`setClient_${id}`);
-
-    // ws.send(`setClient_${id}`);
     send(`getClients_${id}`);
-    console.log(id);
+    const btnCreateLobby = document.getElementById("btn-create-lobby");
+    const username = document.getElementById("username").textContent;
+    btnCreateLobby.onclick = () => {
+        fetch("localhost:3000/lobby/create", {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username }),
+        });
+    };
 };
 
 function showClientsNames(names) {
