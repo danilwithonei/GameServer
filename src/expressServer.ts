@@ -10,5 +10,5 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/clients", enterRouter);
 
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "../views/startPage.html"));
+    res.sendFile(path.join(__dirname, "../views/html/startPage.html"));
 });

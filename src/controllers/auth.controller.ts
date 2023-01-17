@@ -12,7 +12,7 @@ class AuthController {
         try {
             const client = services.createClient(req.body.username);
             res.cookie("id", client.id);
-            res.sendFile(path.join(__dirname, "../../views/lobbiesPage.html"));
+            res.sendFile(path.join(__dirname, "../../views/html/lobbiesPage.html"));
         } catch (error) {
             console.log(error);
             res.status(-1).json({ message: error });
