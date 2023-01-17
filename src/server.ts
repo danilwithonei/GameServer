@@ -4,6 +4,7 @@ import { Player } from "./entities/player";
 import { ServerServices } from "./services/server.services";
 import { Room } from "./entities/room";
 import { app } from "./expressServer";
+import { messageCase } from "./interfaces";
 
 const expressPort = process.env.EXPRESS_PORT;
 const socketPort = process.env.SOCKET_PORT;
@@ -44,9 +45,8 @@ server.on("connection", (ws) => {
             case "getClients": {
                 const client = services.getClientById(data);
                 const clientsNames = services.getClientsNames(client.ws);
-                console.log(`Names: ${clientsNames}`);
 
-                client.sendSelf(JSON.stringify({ clientsNames: clientsNames }));
+                client.sendSelf({ type: messageCase.clientsNames, data: clientsNames });
                 break;
             }
             case "setClient": {

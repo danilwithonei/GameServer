@@ -1,5 +1,6 @@
 import { WebSocket } from "ws";
 import { v4 as uuid } from "uuid";
+import { IMessage } from "../interfaces";
 
 export class Client {
     ws: WebSocket;
@@ -11,7 +12,7 @@ export class Client {
         this.id = uuid();
     }
 
-    sendSelf(msg: string) {
-        this.ws.send(msg);
+    sendSelf(msg: IMessage) {
+        this.ws.send(JSON.stringify(msg));
     }
 }

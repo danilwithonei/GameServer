@@ -7,6 +7,7 @@
     </head>
     <body>
         <h1>Clients</h1>
+        <div id="clients"></div>
     </body>
     <script>
         const ws = new WebSocket("ws://localhost:5000");
@@ -18,11 +19,23 @@
             console.log(id);
         };
 
+        function showClientsNames(names) {
+            const parent = document.getElementById("clients");
+
+            for (const name of names) {
+                const child = document.createElement("div");
+                child.textContent = name;
+                parent.appendChild(child);
+            }
+        }
+
         ws.onmessage = (res) => {
             const response = JSON.parse(res.data);
-            switch (response.case) {
-                case "":
-                    const response = "hg";
+            const data = response.data;
+
+            switch (response.type) {
+                case "clientsNames":
+                    showClientsNames(data);
                     break;
 
                 default: {
