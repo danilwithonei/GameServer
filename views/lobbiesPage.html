@@ -20,6 +20,15 @@
 
         ws.onmessage = (res) => {
             const response = JSON.parse(res.data);
+            switch (response.case) {
+                case "":
+                    const response = "hg";
+                    break;
+
+                default: {
+                    break;
+                }
+            }
             console.log(response);
         };
     </script>
