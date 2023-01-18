@@ -4,16 +4,20 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
+        <link rel="stylesheet" href="../css/styles.css" />
         <script src="../js/lobbies.js"></script>
     </head>
     <body>
-        <h1>Lobbies</h1>
-        <div id="lobbies"></div>
-        <button id="btn-refresh-lobbies">Refresh</button>
-        <button id="join">Join</button>
-
-        <label>lobby name:</label>
-        <input id="lobby-name" type="text" />
-        <button id="btn-create-lobby">create</button>
+        <div id="div-lobbies">
+            <h1 style="text-align: center">Lobbies</h1>
+            <div id="lobbies"></div>
+            <button id="join">Join</button>
+            <button id="btn-refresh-lobbies">Refresh</button>
+        </div>
+        <div id="div-enter-lobby">
+            <h1 style="text-align: center">lobby name:</h1>
+            <input id="lobby-name" type="text" />
+            <button id="btn-create-lobby">create</button>
+        </div>
     </body>
 </html>
