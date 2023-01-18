@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { validationResult } from "express-validator";
 import path from "path";
 import { Room } from "../entities/room";
+import { messageCase } from "../interfaces";
 import { services } from "../server";
 
 class LobbyController {
@@ -19,11 +20,14 @@ class LobbyController {
                 `client [${client.name}] with id: [${client.id}]\ncreated and join to lobby [${room.name}] with id [${room.uuid}]`,
             );
             res.sendFile(path.join(__dirname, "../../views/html/gamePage.html"));
+
+            services.sendAll({ type: messageCase.lobbiesNames, data: services.getRoomsNames() });
         } catch (error) {
             console.log(error);
             res.status(-1).json({ message: error });
         }
     }
+
     async getAllLobbies(req: Request, res: Response) {
         const roomNames = services.getRoomsNames();
         res.send(JSON.stringify({ roomNames }));

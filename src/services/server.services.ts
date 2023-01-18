@@ -13,6 +13,7 @@ export class ServerServices {
     constructor(server: WebSocket.Server<WebSocket.WebSocket>) {
         this.server = server;
     }
+
     createClient(name: string) {
         const client = new Client(name);
         this.clients.push(client);
@@ -55,11 +56,7 @@ export class ServerServices {
     }
 
     getRoomsNames() {
-        const roomNames: string[] = [];
-        this.rooms.forEach((room) => {
-            roomNames.push(room.name);
-        });
-        return roomNames;
+        return this.rooms.map((room) => room.name);
     }
 
     getClientsNames() {

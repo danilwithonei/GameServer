@@ -16,15 +16,12 @@ const server = new WebSocket.Server({ port: +socketPort }, () => {
 export const services = new ServerServices(server);
 
 server.on("connection", (ws) => {
-    // const newPlayer = new Player(ws);
-    console.log(`new client connected`);
-    const client = services.getClientByWs(ws);
-    // services.players.push(newPlayer);
+    console.log(`Server | new client connected`);
 
     ws.on("message", (msg) => {
         const command = msg.toString("utf-8").split("_")[0];
         const data = msg.toString("utf-8").split("_")[1];
-        // const client = services.getOneByWs(ws);
+
         switch (command) {
             case "setUsername": {
                 // client.setName(jsonMsg["username"]);
@@ -48,6 +45,12 @@ server.on("connection", (ws) => {
 
                 break;
             }
+            case "getLobbies": {
+                const lobbiesNames = services.getRoomsNames();
+                services.sendAll({ type: messageCase.lobbiesNames, data: lobbiesNames });
+
+                break;
+            }
             case "setClient": {
                 services.setWs(ws, data);
                 break;
@@ -67,10 +70,16 @@ server.on("connection", (ws) => {
         }
     });
 
-    ws.on("close", () => {
-        // const client = services.getOneByWs(ws);
-        // services.players = services.players.filter((c) => c.ws !== ws);
-        services.clients = services.clients.filter((c) => c.ws != ws);
+    ws.on("close", (msg) => {
+        console.log(...services.clients);
+
+        services.clients = services.clients.filter((c) => {
+            if (c.ws?.CLOSED) {
+                console.log(`Server| Client ${c.name} was disconnected`);
+            } else {
+                return c;
+            }
+        });
         const clientsNames = services.getClientsNames();
         services.sendAll({ type: messageCase.clientsNames, data: clientsNames });
     });
