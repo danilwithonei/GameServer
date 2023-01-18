@@ -6,7 +6,7 @@ export const router = Router();
 
 router.post(
     "/create",
-    [check("username", "Username can`t be NULL!").notEmpty()],
+    // [check("lobbyName", "lobbyName can`t be NULL!").notEmpty()],
     lobbyController.createLobby,
 );
 router.post("/join");

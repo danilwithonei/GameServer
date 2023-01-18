@@ -4,14 +4,14 @@ import "dotenv/config";
 import { router as enterRouter } from "./routers/enterRouter";
 import { router as lobbyRouter } from "./routers/lobbyRouter";
 import cors from "cors";
-import bodyParser from "body-parser";
+// import bodyParser from "body-parser";
 
 export const app = express();
 
 app.use(express.static(path.join(__dirname, "../views")));
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use("/clients", enterRouter);
+app.use(express.json()); // to support JSON-encoded bodies
+app.use(express.urlencoded());
+app.use("/lobbies", enterRouter);
 app.use("/lobby", lobbyRouter);
 app.use(cors());
 

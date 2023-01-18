@@ -8,12 +8,10 @@
 </head>
 <body>
     <body>
-        <form method="post">
+        <form action="/lobbies" method="post" enctype="application/json">
             <h1>Enter name</h1>
-            <input id="username" name="username" type="text" class="validate" />
-            <label for="username">Имя</label>
-            <button formaction="/lobby/create">Create lobby</button>
-            <button>Join to lobby</button>
+            <input id="username" name = "username" type="text" class="validate" />
+            <button>Submit</button>
         </form>
     </body>
 </html>
