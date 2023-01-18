@@ -9,4 +9,5 @@ router.post(
     [check("lobbyName", "lobbyName can`t be NULL!").notEmpty()],
     lobbyController.createLobby,
 );
+router.get("/all", lobbyController.getAllLobbies);
 router.post("/join");

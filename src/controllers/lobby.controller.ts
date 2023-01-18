@@ -24,6 +24,10 @@ class LobbyController {
             res.status(-1).json({ message: error });
         }
     }
+    async getAllLobbies(req: Request, res: Response) {
+        const roomNames = services.getRoomsNames();
+        res.send(JSON.stringify({ roomNames }));
+    }
 }
 
 export const lobbyController = new LobbyController();

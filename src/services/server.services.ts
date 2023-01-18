@@ -16,8 +16,6 @@ export class ServerServices {
     createClient(name: string) {
         const client = new Client(name);
         this.clients.push(client);
-        console.log(`Clients: ${this.clients.length}`);
-
         return client;
     }
 
