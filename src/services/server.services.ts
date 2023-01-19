@@ -56,7 +56,9 @@ export class ServerServices {
     }
 
     getRoomsNames() {
-        return this.rooms.map((room) => room.name);
+        return this.rooms.map((room) => {
+            return { name: room.name, id: room.uuid };
+        });
     }
 
     getClientsNames() {
