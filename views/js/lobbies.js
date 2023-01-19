@@ -14,11 +14,20 @@ function showLobbiesNames(names) {
     const parent = document.getElementById("lobbies");
     parent.replaceChildren();
 
-    for (const name of names) {
+    for (const { name, id } of names) {
+        const btnJoin = document.createElement("button");
+        btnJoin.textContent = "Join";
+        btnJoin.className = "btn-join";
+        btnJoin.id = id;
+        btnJoin.onclick = () => {
+            send({});
+        };
+
         const child = document.createElement("div");
         child.textContent = name;
         child.className = "one-lobby";
         parent.appendChild(child);
+        parent.appendChild(btnJoin);
     }
 }
 
@@ -43,6 +52,8 @@ onload = function () {
             if (xhr.status != 200) {
                 // анализируем HTTP-статус ответа, если статус не 200, то произошла ошибка
                 alert(`Ошибка ${xhr.status}: ${xhr.statusText}`); // Например, 404: Not Found
+            } else {
+                // window.location.href = "/";
             }
         };
     };

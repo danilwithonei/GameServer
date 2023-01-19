@@ -69,3 +69,8 @@
     font-size: 22;
     padding-left: 10px;
 }
+.btn-join {
+    position: relative;
+    top: -30px;
+    left: 250px;
+}

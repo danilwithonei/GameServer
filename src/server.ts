@@ -23,32 +23,9 @@ server.on("connection", (ws) => {
         const data = msg.toString("utf-8").split("_")[1];
 
         switch (command) {
-            case "setUsername": {
-                // client.setName(jsonMsg["username"]);
-                break;
-            }
-            case "createRoom": {
-                // const room = new Room(jsonMsg["roomName"]);
-                // room.players_uuids.push(client.uuid);
-                // services.rooms.push(room);
-                // client.setRoom(room.name, room.uuid);
-                break;
-            }
-            case "getRooms": {
-                const roomNames = services.getRoomsNames();
-                // client.sendSelf(JSON.stringify(roomNames));
-                break;
-            }
-            case "getClients": {
-                const clientsNames = services.getClientsNames();
-                services.sendAll({ type: messageCase.clientsNames, data: clientsNames });
-
-                break;
-            }
             case "getLobbies": {
                 const lobbiesNames = services.getRoomsNames();
                 services.sendAll({ type: messageCase.lobbiesNames, data: lobbiesNames });
-
                 break;
             }
             case "setClient": {
@@ -60,11 +37,9 @@ server.on("connection", (ws) => {
                 services.sendAllExept(ws);
                 break;
             }
-            case "setRoom": {
-                // const roomName = jsonMsg["roomName"];
-                // const room = services.getRoomByName(roomName);
-                // client.setRoom(room.name, room.uuid);
-                // room.players_uuids.push(client.uuid);
+            case "join": {
+                const [clientId, roomId] = JSON.parse(data);
+
                 break;
             }
         }
