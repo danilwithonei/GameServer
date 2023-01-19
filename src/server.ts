@@ -1,8 +1,9 @@
 import WebSocket from "ws";
 import "dotenv/config";
-import { ServerServices } from "./services/server.services";
 import { app } from "./expressServer";
 import { messageCase } from "./interfaces";
+import { clientController } from "./controllers/client.controller";
+import { roomController } from "./controllers/room.controller";
 
 const expressPort = process.env.EXPRESS_PORT;
 const socketPort = process.env.SOCKET_PORT;
@@ -10,8 +11,6 @@ const socketPort = process.env.SOCKET_PORT;
 const server = new WebSocket.Server({ port: +socketPort }, () => {
     console.log(`### Server started on port! ${socketPort} ###`);
 });
-
-export const services = new ServerServices(server);
 
 server.on("connection", (ws) => {
     console.log(`Server | new client connected`);
@@ -22,12 +21,12 @@ server.on("connection", (ws) => {
 
         switch (command) {
             case "getRooms": {
-                const roomsNames = services.getRoomsNames();
-                services.sendAll({ type: messageCase.roomsNames, data: roomsNames });
+                const roomsNames = roomController.getRoomsNamesAndId();
+                clientController.sendAll({ type: messageCase.roomsNames, data: roomsNames });
                 break;
             }
             case "setClient": {
-                services.setWs(ws, data);
+                clientController.setWs(ws, data);
                 break;
             }
             case "go": {
@@ -41,19 +40,7 @@ server.on("connection", (ws) => {
         }
     });
 
-    ws.on("close", (msg) => {
-        console.log(...services.clients);
-
-        services.clients = services.clients.filter((c) => {
-            if (c.ws?.CLOSED) {
-                console.log(`Server| Client ${c.name} was disconnected`);
-            } else {
-                return c;
-            }
-        });
-        const clientsNames = services.getClientsNames();
-        services.sendAll({ type: messageCase.clientsNames, data: clientsNames });
-    });
+    ws.on("close", (msg) => {});
 });
 
 app.listen(expressPort, () => {

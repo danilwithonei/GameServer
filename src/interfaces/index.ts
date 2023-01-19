@@ -15,3 +15,7 @@ export interface IController {
     getAll(): Client[] | Room[];
     getOneById(id: string): Client | Room;
 }
+
+export interface IClientController extends IController {
+    createClient(name: string): Client;
+}

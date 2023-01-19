@@ -1,13 +1,39 @@
+import WebSocket from "ws";
 import { Client } from "../entities/client";
-import { IController } from "../interfaces";
+import { IClientController, IMessage } from "../interfaces";
+import { clientService } from "../services/client.service";
 
-class ClientController implements IController {
-    getAll(): Client[] {
-        return [];
+class ClientController implements IClientController {
+    createClient(name: string) {
+        return clientService.createClient(name);
     }
 
-    getOneById(): Client {
-        return;
+    getAll(): Client[] {
+        return clientService.getAll();
+    }
+
+    getOneById(id: string): Client {
+        return clientService.getOneById(id);
+    }
+
+    getOneByWs(ws: WebSocket): Client {
+        return clientService.getOneByWs(ws);
+    }
+
+    sendAll(msg: IMessage) {
+        this.getAll().forEach((client) => {
+            if (client.ws.readyState === WebSocket.OPEN) client.sendSelf(msg);
+        });
+    }
+
+    getClientsNames() {
+        return this.getAll().map((client) => client.name);
+    }
+
+    setWs(ws: WebSocket, id: string) {
+        const client = clientService.getOneById(id);
+        client.ws = ws;
+        return client;
     }
 }
 

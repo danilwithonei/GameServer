@@ -1,13 +1,15 @@
 import { Room } from "../entities/room";
 
-export class RoomService {
-    private rooms: Room[];
+class RoomService {
+    private rooms: Room[] = [];
 
     getAll(): Room[] {
         return this.rooms;
     }
     createRoom(name: string) {
-        this.rooms.push(new Room(name));
+        const room = new Room(name);
+        this.rooms.push(room);
+        return room;
     }
 
     getOneById(id: string): Room {
@@ -17,3 +19,5 @@ export class RoomService {
         return this.getAll().filter((room) => room.name === name)[0];
     }
 }
+
+export const roomService = new RoomService();

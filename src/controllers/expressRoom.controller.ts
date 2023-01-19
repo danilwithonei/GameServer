@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
 import { validationResult } from "express-validator";
 import path from "path";
-import { Room } from "../entities/room";
 import { messageCase } from "../interfaces";
-import { services } from "../server";
-
+import { clientService } from "../services/client.service";
+import { clientController } from "./client.controller";
+import { roomService } from "../services/room.service";
+import { roomController as serverRoomController } from "./room.controller";
 class RoomController {
     async createRoom(req: Request, res: Response) {
         const errors = validationResult(req);
@@ -12,16 +13,19 @@ class RoomController {
             return res.status(400).json({ message: "Input errors ", errors });
         }
         try {
-            const room = new Room(req.body.roomName);
-            services.rooms.push(room);
-            const client = services.getClientById(req.body.userId);
+            const room = roomService.createRoom(req.body.roomName);
+
+            const client = clientService.getOneById(req.body.userId);
             client.setRoom(room.name, room.uuid);
             console.log(
                 `client [${client.name}] with id: [${client.id}]\ncreated and join to room [${room.name}] with id [${room.uuid}]`,
             );
             res.sendFile(path.join(__dirname, "../../views/html/gamePage.html"));
 
-            services.sendAll({ type: messageCase.roomsNames, data: services.getRoomsNames() });
+            clientController.sendAll({
+                type: messageCase.roomsNames,
+                data: serverRoomController.getRoomsNamesAndId,
+            });
         } catch (error) {
             console.log(error);
             res.status(-1).json({ message: error });
@@ -29,7 +33,7 @@ class RoomController {
     }
 
     async getAllRooms(req: Request, res: Response) {
-        const roomNames = services.getRoomsNames();
+        const roomNames = serverRoomController.getRoomsNamesAndId();
         res.send(JSON.stringify({ roomNames }));
     }
 }
