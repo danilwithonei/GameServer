@@ -61,3 +61,11 @@
     left: 400px;
     border-style: solid;
 }
+.one-lobby {
+    position: relative;
+    border-style: solid;
+    margin: 1px;
+    height: 30px;
+    font-size: 22;
+    padding-left: 10px;
+}

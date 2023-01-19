@@ -17,6 +17,7 @@ function showLobbiesNames(names) {
     for (const name of names) {
         const child = document.createElement("div");
         child.textContent = name;
+        child.className = "one-lobby";
         parent.appendChild(child);
     }
 }
