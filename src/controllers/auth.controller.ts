@@ -4,7 +4,7 @@ import path from "path";
 import { services } from "../server";
 
 class AuthController {
-    async createClient(req: Request, res: Response) {
+    createClient(req: Request, res: Response) {
         console.log(`new user with name ${req.body.username}`);
         const errors = validationResult(req);
         if (!errors.isEmpty()) {

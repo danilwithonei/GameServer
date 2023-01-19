@@ -20,31 +20,10 @@ export class ServerServices {
         return client;
     }
 
-    getOnline(): number {
-        return this.players.length;
-    }
-
-    getAllXYExept(ws: WebSocket): string {
-        const allXY: string[] = [];
-        // исправить что бы цикл был по uuid players у комнаты
-
-        for (const client of this.players) {
-            if (client.ws !== ws && this.getOneByWs(ws).roomUuid == client.roomUuid)
-                allXY.push(`${client.x} ${client.y}`);
-        }
-
-        return allXY.toString();
-    }
-
     sendAll(msg: IMessage) {
         this.server.clients.forEach((client) => {
             if (client.readyState === WebSocket.OPEN) client.send(JSON.stringify(msg));
         });
-    }
-
-    sendAllExept(ws: WebSocket) {
-        const allXY = this.getAllXYExept(ws);
-        this.getOneByWs(ws).ws.send(allXY);
     }
 
     getOneByWs(ws: WebSocket): Player {

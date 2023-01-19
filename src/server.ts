@@ -1,8 +1,6 @@
 import WebSocket from "ws";
 import "dotenv/config";
-import { Player } from "./entities/player";
 import { ServerServices } from "./services/server.services";
-import { Room } from "./entities/room";
 import { app } from "./expressServer";
 import { messageCase } from "./interfaces";
 
@@ -33,8 +31,6 @@ server.on("connection", (ws) => {
                 break;
             }
             case "go": {
-                // client.setXY(jsonMsg["x"], jsonMsg["y"]);
-                services.sendAllExept(ws);
                 break;
             }
             case "join": {
