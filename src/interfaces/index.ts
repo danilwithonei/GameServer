@@ -13,5 +13,5 @@ export interface IMessage {
 
 export interface IController {
     getAll(): Client[] | Room[];
-    getOneById(): Client | Room;
+    getOneById(id: string): Client | Room;
 }
