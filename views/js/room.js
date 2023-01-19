@@ -14,10 +14,10 @@ onload = function () {
     const id = document.cookie.split("=")[1];
     send(`setClient_${id}`);
     send(`getClients_${id}`);
-    const btnCreateLobby = document.getElementById("btn-create-lobby");
+    const btnCreateRoom = document.getElementById("btn-create-room");
     const username = document.getElementById("username").textContent;
-    btnCreateLobby.onclick = () => {
-        fetch("localhost:3000/lobby/create", {
+    btnCreateRoom.onclick = () => {
+        fetch("localhost:3000/room/create", {
             method: "POST",
             headers: {
                 Accept: "application/json",

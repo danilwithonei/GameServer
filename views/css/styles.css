@@ -30,11 +30,11 @@
     height: 30px;
     font-size: large;
 }
-#div-lobbies {
+#div-rooms {
     position: absolute;
     border-style: solid;
 }
-#lobbies {
+#rooms {
     height: 400px;
     width: 300px;
     margin: 10px;
@@ -42,7 +42,7 @@
     border-style: solid;
     overflow-y: scroll;
 }
-#btn-refresh-lobbies {
+#btn-refresh-rooms {
     position: relative;
     height: 30px;
     width: 300px;
@@ -56,12 +56,12 @@
     margin: 10px;
     display: block;
 }
-#div-enter-lobby {
+#div-enter-room {
     position: absolute;
     left: 400px;
     border-style: solid;
 }
-.one-lobby {
+.one-room {
     position: relative;
     border-style: solid;
     margin: 1px;

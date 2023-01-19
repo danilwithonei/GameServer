@@ -10,8 +10,8 @@ const send = function (data) {
     }
 };
 
-function showLobbiesNames(names) {
-    const parent = document.getElementById("lobbies");
+function showRoomsNames(names) {
+    const parent = document.getElementById("rooms");
     parent.replaceChildren();
 
     for (const { name, id } of names) {
@@ -25,7 +25,7 @@ function showLobbiesNames(names) {
 
         const child = document.createElement("div");
         child.textContent = name;
-        child.className = "one-lobby";
+        child.className = "one-room";
         parent.appendChild(child);
         parent.appendChild(btnJoin);
     }
@@ -33,18 +33,18 @@ function showLobbiesNames(names) {
 
 onload = function () {
     const id = document.cookie.split("=")[1];
-    const btnCreateLobby = document.getElementById("btn-create-lobby");
+    const btnCreateRoom = document.getElementById("btn-create-room");
 
-    btnCreateLobby.onclick = () => {
-        const lobbyName = document.getElementById("lobby-name").value;
-        console.log(lobbyName);
-        document.getElementById("lobby-name").value = "";
+    btnCreateRoom.onclick = () => {
+        const roomName = document.getElementById("room-name").value;
+        console.log(roomName);
+        document.getElementById("room-name").value = "";
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", "http://localhost:3000/lobby/create", true);
+        xhr.open("POST", "http://localhost:3000/room/create", true);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.send(
             JSON.stringify({
-                lobbyName: lobbyName,
+                roomName: roomName,
                 userId: id,
             }),
         );
@@ -58,7 +58,7 @@ onload = function () {
         };
     };
 
-    send("getLobbies");
+    send("getRooms");
 };
 
 ws.onmessage = (res) => {
@@ -66,8 +66,8 @@ ws.onmessage = (res) => {
     const data = response.data;
 
     switch (response.type) {
-        case "lobbiesNames":
-            showLobbiesNames(data);
+        case "roomsNames":
+            showRoomsNames(data);
             break;
 
         default: {

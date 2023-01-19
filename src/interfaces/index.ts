@@ -3,7 +3,7 @@ import { Room } from "../entities/room";
 
 export enum messageCase {
     clientsNames = "clientsNames",
-    lobbiesNames = "lobbiesNames",
+    roomsNames = "roomsNames",
 }
 
 export interface IMessage {

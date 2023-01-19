@@ -21,9 +21,9 @@ server.on("connection", (ws) => {
         const data = msg.toString("utf-8").split("_")[1];
 
         switch (command) {
-            case "getLobbies": {
-                const lobbiesNames = services.getRoomsNames();
-                services.sendAll({ type: messageCase.lobbiesNames, data: lobbiesNames });
+            case "getRooms": {
+                const roomsNames = services.getRoomsNames();
+                services.sendAll({ type: messageCase.roomsNames, data: roomsNames });
                 break;
             }
             case "setClient": {
