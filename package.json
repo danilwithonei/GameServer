@@ -4,7 +4,9 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "start": "ts-node ./src/server.ts"
+        "start:dev": "MODE=development ts-node ./src/server.ts",
+        "start:prod": "MODE=prod node ./dst/server.js",
+        "build": "tsc --build --clean && tsc"
     },
     "author": "",
     "license": "ISC",

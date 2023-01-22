@@ -1,12 +1,12 @@
+import { EXPRESS_PORT, SOCKET_PORT } from "./utils/envar";
 import WebSocket from "ws";
-import "dotenv/config";
 import { app } from "./expressServer";
 import { messageCase } from "./interfaces";
 import { clientController } from "./controllers/client.controller";
 import { roomController } from "./controllers/room.controller";
 
-const expressPort = process.env.EXPRESS_PORT;
-const socketPort = process.env.SOCKET_PORT;
+const expressPort = EXPRESS_PORT;
+const socketPort = SOCKET_PORT;
 
 const server = new WebSocket.Server({ port: +socketPort }, () => {
     console.log(`### Server started on port! ${socketPort} ###`);
@@ -24,7 +24,7 @@ server.on("connection", (ws) => {
                 const roomsNames = roomController.getRoomsNamesAndId();
                 const client = clientController.getOneByWs(ws);
                 console.log(
-                    `Server | client ${client.name} requested rooms names: ${[...roomsNames]} `,
+                    `Server | client ${client?.name} requested rooms names: ${[...roomsNames]} `,
                 );
                 clientController.sendAll({ type: messageCase.roomsNames, data: roomsNames });
                 break;

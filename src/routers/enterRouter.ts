@@ -9,3 +9,5 @@ router.post(
     [check("username", "Username can`t be NULL!").notEmpty()],
     authController.createClient,
 );
+
+router.get("/socketUrl", authController.getSocketUrl);

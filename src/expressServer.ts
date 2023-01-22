@@ -1,10 +1,8 @@
 import express from "express";
 import path from "path";
-import "dotenv/config";
 import { router as enterRouter } from "./routers/enterRouter";
 import { router as roomRouter } from "./routers/roomRouter";
 import cors from "cors";
-// import bodyParser from "body-parser";
 
 export const app = express();
 

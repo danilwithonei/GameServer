@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { validationResult } from "express-validator";
 import path from "path";
 import { clientService } from "../services/client.service";
+import { SOCKET_PORT, SOCKET_URL } from "../utils/envar";
 
 class AuthController {
     createClient(req: Request, res: Response) {
@@ -14,6 +15,15 @@ class AuthController {
             const client = clientService.createClient(req.body.username);
             res.cookie("id", client.id);
             res.sendFile(path.join(__dirname, "../../views/html/roomsPage.html"));
+        } catch (error) {
+            console.log(error);
+            res.status(-1).json({ message: error });
+        }
+    }
+
+    getSocketUrl(req: Request, res: Response) {
+        try {
+            res.send(`wss://${SOCKET_URL}:${SOCKET_PORT}`);
         } catch (error) {
             console.log(error);
             res.status(-1).json({ message: error });
