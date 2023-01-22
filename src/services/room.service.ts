@@ -15,8 +15,14 @@ class RoomService {
     getOneById(id: string): Room {
         return this.getAll().filter((room) => room.uuid === id)[0];
     }
+
     getRoomByName(name: string): Room {
         return this.getAll().filter((room) => room.name === name)[0];
+    }
+
+    deleteRoom(id: string) {
+        console.log(`Server | delete room with id: ${id}`);
+        return (this.rooms = this.rooms.filter((room) => room.uuid != id));
     }
 }
 

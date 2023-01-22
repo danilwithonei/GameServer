@@ -8,7 +8,7 @@ export class Player {
     x: Number;
     y: Number;
     roomName: string;
-    roomUuid: string;
+    roomId: string;
 
     constructor(ws: WebSocket) {
         this.uuid = uuid();
@@ -19,9 +19,9 @@ export class Player {
         this.ws.send(msg);
     }
 
-    setRoom(roomName: string, roomUuid: string) {
+    setRoom(roomName: string, roomId: string) {
         this.roomName = roomName;
-        this.roomUuid = roomUuid;
+        this.roomId = roomId;
     }
 
     setName(name: string) {

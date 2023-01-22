@@ -32,7 +32,7 @@ server.on("connection", (ws) => {
             case "setClient": {
                 clientController.setWs(ws, data);
                 const client = clientController.getOneByWs(ws);
-                console.log(`client [${client.name}] received ws!`);
+                console.log(`Server | client ${client.name} received ws!`);
                 break;
             }
             case "go": {
@@ -50,7 +50,9 @@ server.on("connection", (ws) => {
         }
     });
 
-    ws.on("close", () => {});
+    ws.on("close", () => {
+        clientController.disconnect(ws);
+    });
 });
 
 app.listen(expressPort, () => {

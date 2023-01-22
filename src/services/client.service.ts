@@ -21,6 +21,10 @@ class ClientService {
     getOneById(id: string) {
         return this.clients.filter((c) => c.id == id)[0];
     }
+
+    deleteClient(id: string) {
+        return (this.clients = this.clients.filter((client) => client.id !== id));
+    }
 }
 
 export const clientService = new ClientService();

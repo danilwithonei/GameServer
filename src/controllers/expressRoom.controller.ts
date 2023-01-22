@@ -17,9 +17,7 @@ class RoomController {
 
             const client = clientService.getOneById(req.body.userId);
             client.setRoom(room.name, room.uuid);
-            console.log(
-                `client [${client.name}] with id: [${client.id}]\ncreated and join to room [${room.name}] with id [${room.uuid}]`,
-            );
+            console.log(`Server | client ${client.name} with id: ${client.id}`);
             // res.sendFile(path.join(__dirname, "../../views/html/gamePage.html"));
             res.send(room.uuid);
 

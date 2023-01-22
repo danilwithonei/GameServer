@@ -7,7 +7,7 @@ export class Client {
     name: string;
     id: string;
     roomName: string;
-    roomUuid: string;
+    roomId: string;
     x: Number;
     y: Number;
 
@@ -20,9 +20,9 @@ export class Client {
         this.ws.send(JSON.stringify(msg));
     }
 
-    setRoom(roomName: string, roomUuid: string) {
+    setRoom(roomName: string, roomId: string) {
         this.roomName = roomName;
-        this.roomUuid = roomUuid;
+        this.roomId = roomId;
     }
 
     setName(name: string) {
