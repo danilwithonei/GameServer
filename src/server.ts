@@ -22,11 +22,15 @@ server.on("connection", (ws) => {
         switch (command) {
             case "getRooms": {
                 const roomsNames = roomController.getRoomsNamesAndId();
+                const client = clientController.getOneByWs(ws);
+                console.log(`client [${client.name}] requested rooms names: ${roomsNames} `);
                 clientController.sendAll({ type: messageCase.roomsNames, data: roomsNames });
                 break;
             }
             case "setClient": {
                 clientController.setWs(ws, data);
+                const client = clientController.getOneByWs(ws);
+                console.log(`client [${client.name}] received ws!`);
                 break;
             }
             case "go": {

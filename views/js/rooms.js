@@ -11,10 +11,12 @@ const send = function (data) {
 };
 
 function showRoomsNames(names) {
+    console.log(names);
     const parent = document.getElementById("rooms");
     parent.replaceChildren();
 
     for (const { name, id } of names) {
+        console.log(name);
         const btnJoin = document.createElement("button");
         btnJoin.textContent = "Join";
         btnJoin.className = "btn-join";
@@ -33,11 +35,11 @@ function showRoomsNames(names) {
 
 onload = function () {
     const id = document.cookie.split("=")[1];
+    send(`setClient_${id}`);
     const btnCreateRoom = document.getElementById("btn-create-room");
 
     btnCreateRoom.onclick = () => {
         const roomName = document.getElementById("room-name").value;
-        console.log(roomName);
         document.getElementById("room-name").value = "";
         var xhr = new XMLHttpRequest();
         xhr.open("POST", "http://localhost:3000/room/create", true);
@@ -56,23 +58,22 @@ onload = function () {
                 // window.location.href = "/";
             }
         };
+        send("getRooms");
     };
-
     send("getRooms");
 };
 
 ws.onmessage = (res) => {
     const response = JSON.parse(res.data);
     const data = response.data;
-
     switch (response.type) {
-        case "roomsNames":
+        case "roomsNames": {
             showRoomsNames(data);
             break;
+        }
 
         default: {
             break;
         }
     }
-    console.log(response);
 };
