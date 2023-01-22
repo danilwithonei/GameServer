@@ -58,7 +58,6 @@ onload = function () {
                 // window.location.href = "/";
             }
         };
-        send("getRooms");
     };
     send("getRooms");
 };

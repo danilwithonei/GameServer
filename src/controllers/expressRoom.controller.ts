@@ -20,11 +20,11 @@ class RoomController {
             console.log(
                 `client [${client.name}] with id: [${client.id}]\ncreated and join to room [${room.name}] with id [${room.uuid}]`,
             );
-            res.sendFile(path.join(__dirname, "../../views/html/gamePage.html"));
+            // res.sendFile(path.join(__dirname, "../../views/html/gamePage.html"));
 
             clientController.sendAll({
                 type: messageCase.roomsNames,
-                data: serverRoomController.getRoomsNamesAndId,
+                data: serverRoomController.getRoomsNamesAndId(),
             });
         } catch (error) {
             console.log(error);

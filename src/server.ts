@@ -23,7 +23,9 @@ server.on("connection", (ws) => {
             case "getRooms": {
                 const roomsNames = roomController.getRoomsNamesAndId();
                 const client = clientController.getOneByWs(ws);
-                console.log(`client [${client.name}] requested rooms names: ${roomsNames} `);
+                console.log(
+                    `Server | client ${client.name} requested rooms names: ${[...roomsNames]} `,
+                );
                 clientController.sendAll({ type: messageCase.roomsNames, data: roomsNames });
                 break;
             }
@@ -44,7 +46,7 @@ server.on("connection", (ws) => {
         }
     });
 
-    ws.on("close", (msg) => {});
+    ws.on("close", () => {});
 });
 
 app.listen(expressPort, () => {
