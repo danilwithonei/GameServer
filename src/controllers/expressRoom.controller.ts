@@ -21,6 +21,7 @@ class RoomController {
                 `client [${client.name}] with id: [${client.id}]\ncreated and join to room [${room.name}] with id [${room.uuid}]`,
             );
             // res.sendFile(path.join(__dirname, "../../views/html/gamePage.html"));
+            res.send(room.uuid);
 
             clientController.sendAll({
                 type: messageCase.roomsNames,

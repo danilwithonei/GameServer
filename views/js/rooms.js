@@ -21,8 +21,9 @@ function showRoomsNames(names) {
         btnJoin.textContent = "Join";
         btnJoin.className = "btn-join";
         btnJoin.id = id;
+        const clientId = document.cookie.split("=")[1];
         btnJoin.onclick = () => {
-            send({});
+            send(`join_${clientId}|${id}`);
         };
 
         const child = document.createElement("div");
@@ -55,7 +56,8 @@ onload = function () {
                 // анализируем HTTP-статус ответа, если статус не 200, то произошла ошибка
                 alert(`Ошибка ${xhr.status}: ${xhr.statusText}`); // Например, 404: Not Found
             } else {
-                // window.location.href = "/";
+                const roomId = xhr.responseText;
+                send(`join_${id}|${roomId}`);
             }
         };
     };

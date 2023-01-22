@@ -39,7 +39,11 @@ server.on("connection", (ws) => {
                 break;
             }
             case "join": {
-                const [clientId, roomId] = JSON.parse(data);
+                const [clientId, roomId] = data.split("|");
+                const client = clientController.getOneByWs(ws);
+                const room = roomController.getOneById(roomId);
+                client.setRoom(room.name, room.uuid);
+                console.log(`Server | client ${clientId} join to room ${roomId}`);
 
                 break;
             }
