@@ -24,6 +24,7 @@ function showRoomsNames(names) {
         const clientId = document.cookie.split("=")[1];
         btnJoin.onclick = () => {
             send(`join_${clientId}|${id}`);
+            window.location.href = "game/";
         };
 
         const child = document.createElement("div");
@@ -58,6 +59,7 @@ onload = function () {
             } else {
                 const roomId = xhr.responseText;
                 send(`join_${id}|${roomId}`);
+                window.location.href = "game/";
             }
         };
     };

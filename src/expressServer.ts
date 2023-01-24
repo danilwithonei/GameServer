@@ -18,3 +18,6 @@ app.use(cors());
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "../views/html/startPage.html"));
 });
+app.get("/game", (req, res) => {
+    res.sendFile(path.join(__dirname, "../views/html/gamePage.html"));
+});

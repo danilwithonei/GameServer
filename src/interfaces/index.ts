@@ -4,6 +4,7 @@ import { Room } from "../entities/room";
 export enum messageCase {
     clientsNames = "clientsNames",
     roomsNames = "roomsNames",
+    playersPos = "playersPos",
 }
 
 export interface IMessage {

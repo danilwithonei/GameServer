@@ -14,6 +14,8 @@ export class Client {
     constructor(name: string) {
         this.name = name;
         this.id = uuid();
+        this.x = 0;
+        this.y = 0;
     }
 
     sendSelf(msg: IMessage) {

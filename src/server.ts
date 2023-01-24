@@ -36,6 +36,25 @@ server.on("connection", (ws) => {
                 break;
             }
             case "go": {
+                const client = clientController.getOneByWs(ws);
+                switch (data) {
+                    case "left": {
+                        break;
+                    }
+                    case "right": {
+                        break;
+                    }
+                    case "up": {
+                        break;
+                    }
+                    case "down": {
+                        break;
+                    }
+                }
+                // client.setXY(x, y);
+                console.log(data);
+                clientController.sendAll({ type: messageCase.playersPos, data: "1" });
+
                 break;
             }
             case "join": {
@@ -51,7 +70,7 @@ server.on("connection", (ws) => {
     });
 
     ws.on("close", () => {
-        clientController.disconnect(ws);
+        // clientController.disconnect(ws);
     });
 });
 
