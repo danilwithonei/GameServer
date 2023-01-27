@@ -8,7 +8,7 @@ import cors from "cors";
 
 export const app = express();
 
-app.use(express.static(path.join(__dirname, "../views")));
+app.use(express.static(path.join(__dirname, "../dist")));
 app.use(express.json()); // to support JSON-encoded bodies
 app.use(express.urlencoded());
 app.use("/rooms", enterRouter);
@@ -16,8 +16,8 @@ app.use("/room", roomRouter);
 app.use(cors());
 
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "../views/html/startPage.html"));
+    res.sendFile(path.join(__dirname, "../dist/views/html/index.html"));
 });
 app.get("/game", (req, res) => {
-    res.sendFile(path.join(__dirname, "../views/html/gamePage.html"));
+    res.sendFile(path.join(__dirname, "../dist/views/html/gamePage.html"));
 });

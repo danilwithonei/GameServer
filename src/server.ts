@@ -5,8 +5,8 @@ import { messageCase } from "./interfaces";
 import { clientController } from "./controllers/client.controller";
 import { roomController } from "./controllers/room.controller";
 
-const expressPort = process.env.EXPRESS_PORT;
-const socketPort = process.env.SOCKET_PORT;
+const expressPort = process.env.VITE_EXPRESS_PORT;
+const socketPort = process.env.VITE_SOCKET_PORT;
 
 const server = new WebSocket.Server({ port: +socketPort }, () => {
     console.log(`### Server started on port! ${socketPort} ###`);

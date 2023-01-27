@@ -9,7 +9,8 @@
         "strictNullChecks": false,
         "esModuleInterop": true,
         "experimentalDecorators": true,
-        "skipLibCheck": true
+        "skipLibCheck": true,
+        "types": ["node", "vite/client"]
     },
 
     "include": ["src/**/*.ts", "src/**/*.json", ".env"],
