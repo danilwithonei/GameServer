@@ -1,4 +1,9 @@
-import"./modulepreload-polyfill-ec808ebb.js";const a=new WebSocket("ws://localhost:5000");let c=`
+const ws = new WebSocket(
+    //@ts-ignore
+    `wss://${import.meta.env.VITE_HOST}/app_wss:${import.meta.env.VITE_SOCKET_PORT}`,
+);
+
+let mapText = `
 ############################################################################################################
 #                                                     |    |                                               #
 #                                                     |    |                                               #
@@ -59,6 +64,61 @@ import"./modulepreload-polyfill-ec808ebb.js";const a=new WebSocket("ws://localho
 #                                                                                                          #
 #                                                                                                          #
 ############################################################################################################
-`;const d=e=>{let t=c.split(`
-`);for(const[o,n]of e)t[n+1]=t[n+1].substring(0,o)+"0"+t[n+1].substring(o+1);return t},i=function(e){const t=document.getElementById("game-map-div"),o=d(e);t.textContent=o.join(`
-`)},s=function(e){a.readyState?a.send(e):setTimeout(function(){s(e)},100)};onload=()=>{const e=document.cookie.split("=")[1];s(`setClient_${e}`),i([[0,0]])};globalThis.addEventListener("keydown",e=>{e.keyCode==37?s("go_left"):e.keyCode==38?s("go_up"):e.keyCode==39?s("go_right"):e.keyCode==40&&s("go_down")});a.onmessage=e=>{const t=JSON.parse(e.data),o=t.data;switch(t.type){case"playersPos":{console.log(o),i(o);break}}};
+`;
+
+const setPlayers = (pos) => {
+    let mapMatrix = mapText.split("\n");
+    for (const [x, y] of pos) {
+        mapMatrix[y + 1] =
+            mapMatrix[y + 1].substring(0, x) + "0" + mapMatrix[y + 1].substring(x + 1);
+    }
+    return mapMatrix;
+};
+
+const drawMap = function (allPos) {
+    const map = document.getElementById("game-map-div") as HTMLElement;
+    const mapMatrix = setPlayers(allPos);
+    map.textContent = mapMatrix.join("\n");
+};
+
+const send = function (data) {
+    if (!ws.readyState) {
+        setTimeout(function () {
+            send(data);
+        }, 100);
+    } else {
+        ws.send(data);
+    }
+};
+onload = () => {
+    const id = document.cookie.split("=")[1];
+    send(`setClient_${id}`);
+    drawMap([[0, 0]]);
+};
+this.addEventListener("keydown", (e) => {
+    if (e.keyCode == 37) {
+        send("go_left");
+    } else if (e.keyCode == 38) {
+        send("go_up");
+    } else if (e.keyCode == 39) {
+        send("go_right");
+    } else if (e.keyCode == 40) {
+        send("go_down");
+    }
+});
+
+ws.onmessage = (res) => {
+    const response = JSON.parse(res.data);
+    const data = response.data;
+    switch (response.type) {
+        case "playersPos": {
+            console.log(data);
+            drawMap(data);
+            break;
+        }
+
+        default: {
+            break;
+        }
+    }
+};
