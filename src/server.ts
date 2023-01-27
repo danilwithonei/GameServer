@@ -1,12 +1,9 @@
 import WebSocket from "ws";
-import "dotenv/config";
+import { expressPort, socketPort } from "./envConfig";
 import { app } from "./expressServer";
 import { messageCase } from "./interfaces";
 import { clientController } from "./controllers/client.controller";
 import { roomController } from "./controllers/room.controller";
-
-const expressPort = process.env.VITE_EXPRESS_PORT;
-const socketPort = process.env.VITE_SOCKET_PORT;
 
 const server = new WebSocket.Server({ port: +socketPort }, () => {
     console.log(`### Server started on port! ${socketPort} ###`);
