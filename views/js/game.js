@@ -1,70 +1,82 @@
 const ws = new WebSocket("ws://localhost:5000");
 
-function drawMap() {
+let mapText = `
+############################################################################################################
+#                                                     |    |                                               #
+#                                                     |    |                                               #
+#                                                     |____|                                               #
+#                                                                                                          #
+#                                                                                                          #
+#                                                                                                          #
+#                                                                                                          #
+#                +----------------+                                                                        #
+#                |                |                                                                        #
+#                                 |                                                                        #
+#                |                +----------------+                                                       #
+#                |                                 |                                                       #
+#                |                                 |                                                       #
+#                |                       +---------+                                                       #
+#                |                       |                                                                 #
+#                +-----------------------+       +------+                                                  #
+#                                                |      |                                                  #
+#                                                |      |                                                  #
+#                                                |      |                                                  #
+#                                                |      |                                                  #
+#                                                +------+                                                  #
+#                                                                                                          #
+#                                                                                                          #
+#                                                                                                          #
+#                                                                                                          #
+#                                                                                                          #
+#                                                                                                          #
+#                                                                                                          #
+#                                                                                                          #
+#                                     +----------+                                                         #
+#                                     |          |                                                         #
+#                                     |          |                                                         #
+#                                     |          |                                                         #
+#                                     |          |                                                         #
+#                            +---] [--+          +---[ ]-+                                                 #
+#                            |                           |                                                 #
+#                            |                   +-------+                                                 #
+#                            |                   |                                                         #
+#                            |                   |                                                         #
+#                            |                   |                                                         #
+#                            |                   |                                                         #
+#                            +-------------------+                                                         #
+#                                                                                                          #
+#                                                                                                          #
+#                                                                                                          #
+#                                                                                                          #
+#                                                                                                          #
+#                                                                                                          #
+#                                                                                                          #
+#                                                                                                          #
+#                                                                                                          #
+#                                                                                                          #
+#                                                                                                          #
+#                                                                                                          #
+#                                                                                                          #
+#                                                                                                          #
+#                                                                                                          #
+#                                                                                                          #
+############################################################################################################
+`;
+
+const setPlayers = (pos) => {
+    let mapMatrix = mapText.split("\n");
+    for (const [x, y] of pos) {
+        mapMatrix[y + 1] =
+            mapMatrix[y + 1].substring(0, x) + "0" + mapMatrix[y + 1].substring(x + 1);
+    }
+    return mapMatrix;
+};
+
+const drawMap = function (allPos) {
     const map = document.getElementById("game-map-div");
-    map.textContent = `
-    ############################################################################################################
-    #                                                     |    |                                               #
-    #                                                     |    |                                               #
-    #                                                     |____|                                               #
-    #                                                                                                          #
-    #                                                                                                          #
-    #                                                                                                          #
-    #                                                                                                          #
-    #                +----------------+                                                                        #
-    #                |                |                                                                        #
-    #                                 |                                                                        #
-    #                |                +----------------+                                                       #
-    #                |                                 |                                                       #
-    #                |                                 |                                                       #
-    #                |                       +---------+                                                       #
-    #                |                       |                                                                 #
-    #                +-----------------------+       +------+                                                  #
-    #                                                |      |                                                  #
-    #                                                |      |                                                  #
-    #                                                |      |                                                  #
-    #                                                |      |                                                  #
-    #                                                +------+                                                  #
-    #                                                                                                          #
-    #                                                                                                          #
-    #                                                                                                          #
-    #                                                                                                          #
-    #                                                                                                          #
-    #                                                                                                          #
-    #                                                                                                          #
-    #                                                                                                          #
-    #                                     +----------+                                                         #
-    #                                     |          |                                                         #
-    #                                     |          |                                                         #
-    #                                     |          |                                                         #
-    #                                     |          |                                                         #
-    #                            +---] [--+          +---[ ]-+                                                 #
-    #                            |                           |                                                 #
-    #                            |                   +-------+                                                 #
-    #                            |                   |                                                         #
-    #                            |                   |                                                         #
-    #                            |                   |                                                         #
-    #                            |                   |                                                         #
-    #                            +-------------------+                                                         #
-    #                                                                                                          #
-    #                                                                                                          #
-    #                                                                                                          #
-    #                                                                                                          #
-    #                                                                                                          #
-    #                                                                                                          #
-    #                                                                                                          #
-    #                                                                                                          #
-    #                                                                                                          #
-    #                                                                                                          #
-    #                                                                                                          #
-    #                                                                                                          #
-    #                                                                                                          #
-    #                                                                                                          #
-    #                                                                                                          #
-    #                                                                                                          #
-    ############################################################################################################
-    `;
-}
+    const mapMatrix = setPlayers(allPos);
+    map.textContent = mapMatrix.join("\n");
+};
 
 const send = function (data) {
     if (!ws.readyState) {
@@ -78,7 +90,7 @@ const send = function (data) {
 onload = () => {
     const id = document.cookie.split("=")[1];
     send(`setClient_${id}`);
-    drawMap();
+    drawMap([[0, 0]]);
 };
 this.addEventListener("keydown", (e) => {
     if (e.keyCode == 37) {
@@ -95,10 +107,10 @@ this.addEventListener("keydown", (e) => {
 ws.onmessage = (res) => {
     const response = JSON.parse(res.data);
     const data = response.data;
-    console.log(data);
     switch (response.type) {
         case "playersPos": {
-            drawMap();
+            console.log(data);
+            drawMap(data);
             break;
         }
 

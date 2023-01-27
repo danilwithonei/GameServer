@@ -37,23 +37,33 @@ server.on("connection", (ws) => {
             }
             case "go": {
                 const client = clientController.getOneByWs(ws);
+                const room = roomController.getOneById(client.roomId);
+
                 switch (data) {
                     case "left": {
+                        client.x -= 1;
+                        room.sendAll();
                         break;
                     }
                     case "right": {
+                        client.x += 1;
+                        room.sendAll();
                         break;
                     }
                     case "up": {
+                        client.y -= 1;
+                        room.sendAll();
                         break;
                     }
                     case "down": {
+                        client.y += 1;
+                        room.sendAll();
                         break;
                     }
                 }
                 // client.setXY(x, y);
-                console.log(data);
-                clientController.sendAll({ type: messageCase.playersPos, data: "1" });
+                // console.log(data);
+                // clientController.sendAll({ type: messageCase.playersPos, data: "1" });
 
                 break;
             }
@@ -61,6 +71,7 @@ server.on("connection", (ws) => {
                 const [clientId, roomId] = data.split("|");
                 const client = clientController.getOneByWs(ws);
                 const room = roomController.getOneById(roomId);
+                room.playersIds.push(client.id);
                 client.setRoom(room.name, room.uuid);
                 console.log(`Server | client ${clientId} join to room ${roomId}`);
 

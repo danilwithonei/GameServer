@@ -8,8 +8,8 @@ export class Client {
     id: string;
     roomName: string;
     roomId: string;
-    x: Number;
-    y: Number;
+    x: number;
+    y: number;
 
     constructor(name: string) {
         this.name = name;
@@ -30,7 +30,7 @@ export class Client {
     setName(name: string) {
         this.name = name;
     }
-    setXY(x: Number, y: Number) {
+    setXY(x: number, y: number) {
         this.x = x;
         this.y = y;
     }
