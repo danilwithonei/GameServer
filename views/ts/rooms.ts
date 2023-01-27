@@ -1,5 +1,5 @@
 //@ts-ignore
-const ws = new WebSocket(`ws://${import.meta.env.VITE_HOST}:${import.meta.env.VITE_SOCKET_PORT}`);
+const ws = new WebSocket(`wss://${import.meta.env.VITE_HOST}/app_wss:${import.meta.env.VITE_SOCKET_PORT}`);
 
 const send = function (data: any) {
     if (!ws.readyState) {
@@ -47,7 +47,8 @@ onload = function () {
         //@ts-ignore
         (document.getElementById("room-name") as HTMLElement).value = "";
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", "http://localhost:3000/room/create", true);
+        //@ts-ignore
+        xhr.open("POST", `https://${import.meta.env.VITE_HOST}/room/create`, true);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.send(
             JSON.stringify({

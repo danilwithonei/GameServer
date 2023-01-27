@@ -7,7 +7,7 @@
         "start": "MODE=dev ts-node ./src/server.ts",
         "vite:build:prod": "vite build --mode production",
         "vite:build:dev": "vite build --mode dev",
-        "start:prod": "MODE=production node ./dist/server.js",
+        "start:prod": "sudo MODE=production node ./dist/server.js",
         "build": "tsc --build --clean && tsc",
         "prod": "npm run vite:build:prod && npm run build && npm run start:prod",
         "dev": "npm run vite:build:dev && npm start"
@@ -22,6 +22,8 @@
         "express": "^4.18.2",
         "express-validator": "^6.14.2",
         "path": "^0.12.7",
+        "tsc": "^2.0.4",
+        "typescript": "^4.9.4",
         "uuid": "^9.0.0",
         "ws": "^8.12.0"
     },

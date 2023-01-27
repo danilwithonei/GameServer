@@ -25,7 +25,7 @@ class ClientController implements IClientController {
 
     sendAll(msg: IMessage) {
         this.getAll().forEach((client) => {
-            if (client.ws.readyState === WebSocket.OPEN) client.sendSelf(msg);
+            if (client.ws?.readyState === WebSocket.OPEN) client.sendSelf(msg);
         });
     }
 

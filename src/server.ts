@@ -1,5 +1,5 @@
 import WebSocket from "ws";
-import { expressPort, socketPort } from "./envConfig";
+import { expressPort, socketPort, host } from "./envConfig";
 import { app } from "./expressServer";
 import { messageCase } from "./interfaces";
 import { clientController } from "./controllers/client.controller";
@@ -83,5 +83,5 @@ server.on("connection", (ws) => {
 });
 
 app.listen(expressPort, () => {
-    console.log(`### Express server started at http://localhost:${expressPort} ###`);
+    console.log(`### Express server started at https://${host} ###`);
 });
