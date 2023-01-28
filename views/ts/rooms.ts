@@ -59,8 +59,10 @@ onload = function () {
             `${import.meta.env.VITE_MODE == "dev" ? "http" : "https"}://${
                 //@ts-ignore
                 import.meta.env.VITE_HOST
+            }${
                 //@ts-ignore
-            }:${import.meta.env.VITE_EXPRESS_PORT}/room/create`,
+                import.meta.env.VITE_MODE == "dev" ? ":" + import.meta.env.VITE_EXPRESS_PORT : ""
+            }/room/create`,
             true,
         );
         xhr.setRequestHeader("Content-Type", "application/json");
