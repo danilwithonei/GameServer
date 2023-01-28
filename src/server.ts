@@ -81,8 +81,8 @@ server.on("connection", (ws) => {
 
 app.listen(expressPort, () => {
     console.log(
-        `### Express server started at ${
-            mode == "dev" ? "http" : "https"
-        }://${host}:${expressPort}/ ###`,
+        `### Express server started at ${mode == "dev" ? "http" : "https"}://${host}${
+            mode == "dev" ? ":" + expressPort : ""
+        }/ ###`,
     );
 });
