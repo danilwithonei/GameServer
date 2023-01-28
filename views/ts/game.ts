@@ -1,8 +1,10 @@
 const ws = new WebSocket(
     //@ts-ignore
-    `wss://${import.meta.env.VITE_HOST}/app_wss:${import.meta.env.VITE_SOCKET_PORT}`,
+    `${import.meta.env.VITE_MODE == "dev" ? "ws" : "wss"}://${import.meta.env.VITE_SOCKET_HOST}:${
+        //@ts-ignore
+        import.meta.env.VITE_SOCKET_PORT
+    }`,
 );
-
 let mapText = `
 ############################################################################################################
 #                                                     |    |                                               #
@@ -66,44 +68,53 @@ let mapText = `
 ############################################################################################################
 `;
 
-const setPlayers = (pos) => {
+function setPlayers(pos) {
     let mapMatrix = mapText.split("\n");
     for (const [x, y] of pos) {
         mapMatrix[y + 1] =
             mapMatrix[y + 1].substring(0, x) + "0" + mapMatrix[y + 1].substring(x + 1);
     }
     return mapMatrix;
-};
+}
 
-const drawMap = function (allPos) {
+function drawMap(allPos) {
     const map = document.getElementById("game-map-div") as HTMLElement;
     const mapMatrix = setPlayers(allPos);
     map.textContent = mapMatrix.join("\n");
-};
+}
 
-const send = function (data) {
+function send(data: string) {
     if (!ws.readyState) {
-        setTimeout(function () {
+        setTimeout(() => {
             send(data);
         }, 100);
     } else {
         ws.send(data);
     }
-};
+}
+
 onload = () => {
     const id = document.cookie.split("=")[1];
     send(`setClient_${id}`);
     drawMap([[0, 0]]);
 };
-this.addEventListener("keydown", (e) => {
-    if (e.keyCode == 37) {
-        send("go_left");
-    } else if (e.keyCode == 38) {
-        send("go_up");
-    } else if (e.keyCode == 39) {
-        send("go_right");
-    } else if (e.keyCode == 40) {
-        send("go_down");
+
+addEventListener("keydown", (e) => {
+    switch (e.keyCode) {
+        case 37:
+            send("go_left");
+            break;
+        case 38:
+            send("go_up");
+            break;
+        case 39:
+            send("go_right");
+            break;
+        case 40:
+            send("go_down");
+            break;
+        default:
+            break;
     }
 });
 

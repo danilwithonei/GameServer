@@ -1,5 +1,10 @@
-//@ts-ignore
-const ws = new WebSocket(`wss://${import.meta.env.VITE_HOST}/app_wss:${import.meta.env.VITE_SOCKET_PORT}`);
+const ws = new WebSocket(
+    //@ts-ignore
+    `${import.meta.env.VITE_MODE == "dev" ? "ws" : "wss"}://${import.meta.env.VITE_SOCKET_HOST}:${
+        //@ts-ignore
+        import.meta.env.VITE_SOCKET_PORT
+    }`,
+);
 
 const send = function (data: any) {
     if (!ws.readyState) {
@@ -48,7 +53,16 @@ onload = function () {
         (document.getElementById("room-name") as HTMLElement).value = "";
         var xhr = new XMLHttpRequest();
         //@ts-ignore
-        xhr.open("POST", `https://${import.meta.env.VITE_HOST}/room/create`, true);
+        xhr.open(
+            "POST",
+            //@ts-ignore
+            `${import.meta.env.VITE_MODE == "dev" ? "http" : "https"}://${
+                //@ts-ignore
+                import.meta.env.VITE_HOST
+                //@ts-ignore
+            }:${import.meta.env.VITE_EXPRESS_PORT}/room/create`,
+            true,
+        );
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.send(
             JSON.stringify({

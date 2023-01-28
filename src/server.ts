@@ -1,5 +1,5 @@
 import WebSocket from "ws";
-import { expressPort, socketPort, host } from "./envConfig";
+import { expressPort, socketPort, host, mode } from "./envConfig";
 import { app } from "./expressServer";
 import { messageCase } from "./interfaces";
 import { clientController } from "./controllers/client.controller";
@@ -39,25 +39,22 @@ server.on("connection", (ws) => {
                 switch (data) {
                     case "left": {
                         client.x -= 1;
-                        room.sendAll();
                         break;
                     }
                     case "right": {
                         client.x += 1;
-                        room.sendAll();
                         break;
                     }
                     case "up": {
                         client.y -= 1;
-                        room.sendAll();
                         break;
                     }
                     case "down": {
                         client.y += 1;
-                        room.sendAll();
                         break;
                     }
                 }
+                room.sendAll();
                 // client.setXY(x, y);
                 // console.log(data);
                 // clientController.sendAll({ type: messageCase.playersPos, data: "1" });
@@ -83,5 +80,9 @@ server.on("connection", (ws) => {
 });
 
 app.listen(expressPort, () => {
-    console.log(`### Express server started at https://${host} ###`);
+    console.log(
+        `### Express server started at ${
+            mode == "dev" ? "http" : "https"
+        }://${host}:${expressPort}/ ###`,
+    );
 });
