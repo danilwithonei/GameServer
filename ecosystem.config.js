@@ -9,7 +9,7 @@ module.exports = {
         {
             name: "prod", // pm2 start App name
             script: "node", // ts-node
-            args: "MODE=production ./dist/server.js", // ts-node args
+            args: " ./dist/server.js", // ts-node args
             exec_mode: "fork", // 'cluster' or 'fork'
             instance_var: "INSTANCE_ID", // instance variable
             instances: 1, // pm2 instance count
@@ -20,10 +20,10 @@ module.exports = {
             merge_logs: true, // if true, stdout and stderr will be merged and sent to pm2 log
             output: "./logs/pm_access.log", // pm2 log file
             error: "./logs/pm_error.log", // pm2 error log file
-            // env: {
-            //   // environment variable
-            //   PORT: 3000,
-            // },
+            env: {
+                // environment variable
+                MODE: production,
+            },
         },
     ],
 };
