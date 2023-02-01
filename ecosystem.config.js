@@ -15,7 +15,7 @@ module.exports = {
             instances: 1, // pm2 instance count
             autorestart: true, // auto restart if process crash
             watch: true, // files change automatic restart
-            ignore_watch: ["node_modules", "logs"], // ignore files change
+            ignore_watch: ["node_modules", "logs", "dist"], // ignore files change
             max_memory_restart: "1G", // restart if process use more than 1G memory
             merge_logs: true, // if true, stdout and stderr will be merged and sent to pm2 log
             output: "./logs/pm_access.log", // pm2 log file
