@@ -9,7 +9,7 @@ module.exports = {
         {
             name: "prod", // pm2 start App name
             script: "node", // ts-node
-            args: "./dist/server.js", // ts-node args
+            args: "MODE=production ./dist/server.js", // ts-node args
             exec_mode: "fork", // 'cluster' or 'fork'
             instance_var: "INSTANCE_ID", // instance variable
             instances: 1, // pm2 instance count
