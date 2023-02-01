@@ -13,7 +13,7 @@ module.exports = {
             exec_mode: "fork", // 'cluster' or 'fork'
             instance_var: "INSTANCE_ID", // instance variable
             instances: 1, // pm2 instance count
-            autorestart: true, // auto restart if process crash
+            autorestart: false, // auto restart if process crash
             watch: false, // files change automatic restart
             ignore_watch: ["node_modules", "logs", "dist"], // ignore files change
             max_memory_restart: "1G", // restart if process use more than 1G memory
