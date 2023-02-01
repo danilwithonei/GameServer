@@ -22,7 +22,7 @@ module.exports = {
             error: "./logs/pm_error.log", // pm2 error log file
             env: {
                 // environment variable
-                MODE: production,
+                MODE: "production",
             },
         },
     ],
