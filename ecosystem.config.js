@@ -8,13 +8,13 @@ module.exports = {
     apps: [
         {
             name: "prod", // pm2 start App name
-            script: "npm run prod", // ts-node
-            // args: "", // ts-node args
+            script: "node", // ts-node
+            args: "./dist/server.js", // ts-node args
             exec_mode: "fork", // 'cluster' or 'fork'
             instance_var: "INSTANCE_ID", // instance variable
             instances: 1, // pm2 instance count
-            autorestart: false, // auto restart if process crash
-            watch: false, // files change automatic restart
+            autorestart: true, // auto restart if process crash
+            watch: true, // files change automatic restart
             ignore_watch: ["node_modules", "logs", "dist"], // ignore files change
             max_memory_restart: "1G", // restart if process use more than 1G memory
             merge_logs: true, // if true, stdout and stderr will be merged and sent to pm2 log
