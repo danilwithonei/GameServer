@@ -9,7 +9,7 @@
         "vite:build:dev": "vite build --mode dev",
         "start:prod": "sudo MODE=production node ./dist/server.js",
         "start:dev": "sudo MODE=dev node ./dist/server.js",
-        "build": "tsc --build --clean && tsc",
+        "build": "npx tsc --build --clean && tsc",
         "prod": "npm run vite:build:prod && npm run build && npm run start:prod",
         "dev": "npm run vite:build:dev && npm start"
     },
