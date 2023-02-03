@@ -17,4 +17,4 @@ COPY . .
 
 EXPOSE 3000 5000
 
-CMD [ "npm", "run", 'prod' ]
+CMD [ "npm", "run", "prod" ]
