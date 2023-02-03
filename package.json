@@ -7,7 +7,7 @@
         "start": "MODE=dev ts-node ./src/server.ts",
         "vite:build:prod": "vite build --mode production",
         "vite:build:dev": "vite build --mode dev",
-        "start:prod": "sudo MODE=production node ./dist/server.js",
+        "start:prod": "MODE=production node ./dist/server.js",
         "start:dev": "sudo MODE=dev node ./dist/server.js",
         "build": "npx tsc --build --clean && tsc",
         "prod": "npm run vite:build:prod && npm run build && npm run start:prod",

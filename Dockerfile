@@ -17,4 +17,6 @@ COPY . .
 
 EXPOSE 3000 5000
 
+RUN npm i typescript
+
 CMD [ "npm", "run", "prod" ]
