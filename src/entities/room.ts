@@ -21,6 +21,9 @@ export class Room {
         }
         return allPos;
     }
+    deletePlayerById(playerId: string): void {
+        this.playersIds = this.playersIds.filter((id) => id !== playerId);
+    }
 
     sendAll() {
         for (const clientId of this.playersIds) {

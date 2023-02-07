@@ -18,12 +18,12 @@ server.on("connection", (ws) => {
 
         switch (command) {
             case "getRooms": {
-                const roomsNames = roomController.getRoomsNamesAndId();
+                const roomsBases = roomController.getRoomsBases();
                 const client = clientController.getOneByWs(ws);
                 console.log(
-                    `Server | client ${client.name} requested rooms names: ${[...roomsNames]} `,
+                    `Server | client ${client.name} requested rooms names: ${[...roomsBases]} `,
                 );
-                clientController.sendAll({ type: messageCase.roomsNames, data: roomsNames });
+                clientController.sendAll({ type: messageCase.roomsNames, data: roomsBases });
                 break;
             }
             case "setClient": {

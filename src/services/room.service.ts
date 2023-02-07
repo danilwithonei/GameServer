@@ -11,7 +11,6 @@ class RoomService {
         this.rooms.push(room);
         return room;
     }
-
     getOneById(id: string): Room {
         return this.getAll().filter((room) => room.uuid === id)[0];
     }

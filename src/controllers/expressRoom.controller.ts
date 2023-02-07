@@ -23,7 +23,7 @@ class RoomController {
 
             clientController.sendAll({
                 type: messageCase.roomsNames,
-                data: serverRoomController.getRoomsNamesAndId(),
+                data: serverRoomController.getRoomsBases(),
             });
         } catch (error) {
             console.log(error);
@@ -32,7 +32,7 @@ class RoomController {
     }
 
     async getAllRooms(req: Request, res: Response) {
-        const roomNames = serverRoomController.getRoomsNamesAndId();
+        const roomNames = serverRoomController.getRoomsBases();
         res.send(JSON.stringify({ roomNames }));
     }
 }

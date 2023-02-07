@@ -49,7 +49,7 @@ class ClientController implements IClientController {
         console.log(`Server | disconnected client with id: ${client.id}`);
         clientService.deleteClient(client.id);
 
-        this.sendAll({ type: messageCase.roomsNames, data: roomController.getRoomsNamesAndId() });
+        this.sendAll({ type: messageCase.roomsNames, data: roomController.getRoomsBases() });
     }
 }
 

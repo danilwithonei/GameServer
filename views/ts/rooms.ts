@@ -1,3 +1,5 @@
+import { RoomBase } from "../../src/interfaces";
+
 const ws = new WebSocket(
     //@ts-ignore
     `${import.meta.env.VITE_MODE == "dev" ? "ws" : "wss"}://${import.meta.env.VITE_SOCKET_HOST}:${
@@ -16,12 +18,12 @@ const send = function (data: any) {
     }
 };
 
-function showRoomsNames(names) {
-    console.log(names);
+function showRoomsNames(roomsBases: RoomBase[]) {
+    console.log([...roomsBases]);
     const parent = document.getElementById("rooms") as HTMLElement;
     parent.replaceChildren();
 
-    for (const { name, id } of names) {
+    for (const { name, id, playersCount } of roomsBases) {
         console.log(name);
         const btnJoin = document.createElement("button");
         btnJoin.textContent = "Join";
@@ -34,7 +36,7 @@ function showRoomsNames(names) {
         };
 
         const child = document.createElement("div");
-        child.textContent = name;
+        child.textContent = `${name} ${playersCount}`;
         child.className = "one-room";
         parent.appendChild(child);
         parent.appendChild(btnJoin);
@@ -88,10 +90,11 @@ onload = function () {
 
 ws.onmessage = (res) => {
     const response = JSON.parse(res.data);
-    const data = response.data;
+
     switch (response.type) {
         case "roomsNames": {
-            showRoomsNames(data);
+            const roomsBases: RoomBase[] = response.data;
+            showRoomsNames(roomsBases);
             break;
         }
 

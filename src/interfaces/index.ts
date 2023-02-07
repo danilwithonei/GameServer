@@ -1,6 +1,12 @@
 import { Client } from "../entities/client";
 import { Room } from "../entities/room";
 
+export interface RoomBase {
+    name: string;
+    id: string;
+    playersCount: number;
+}
+
 export enum messageCase {
     clientsNames = "clientsNames",
     roomsNames = "roomsNames",

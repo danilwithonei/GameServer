@@ -1,6 +1,6 @@
 import { Client } from "../entities/client";
 import { Room } from "../entities/room";
-import { IController } from "../interfaces";
+import { IController, RoomBase } from "../interfaces";
 import { roomService } from "../services/room.service";
 
 export class RoomController implements IController {
@@ -15,9 +15,9 @@ export class RoomController implements IController {
         return roomService.getOneById(id);
     }
 
-    getRoomsNamesAndId() {
+    getRoomsBases(): RoomBase[] {
         return roomService.getAll().map((room) => {
-            return { name: room.name, id: room.uuid };
+            return { name: room.name, id: room.uuid, playersCount: room.playersIds.length };
         });
     }
 
