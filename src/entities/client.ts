@@ -15,8 +15,8 @@ export class Client {
     constructor(name: string) {
         this.name = name;
         this.id = uuid();
-        this.x = 0;
-        this.y = 0;
+        this.x = 1;
+        this.y = 1;
         this.where = whereClient.inRoomCreating;
     }
 
