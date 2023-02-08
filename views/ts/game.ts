@@ -98,25 +98,32 @@ onload = () => {
     send(`setClient_${id}`);
     drawMap([[0, 0]]);
 };
-
+var keyCode = "none";
 addEventListener("keydown", (e) => {
     switch (e.keyCode) {
         case 37:
-            send("go_left");
+            keyCode = "go_left";
             break;
         case 38:
-            send("go_up");
+            keyCode = "go_up";
             break;
         case 39:
-            send("go_right");
+            keyCode = "go_right";
             break;
         case 40:
-            send("go_down");
+            keyCode = "go_down";
             break;
         default:
             break;
     }
 });
+
+setInterval(() => {
+    if (keyCode !== "none") {
+        send(keyCode);
+        keyCode = "none";
+    }
+}, 100);
 
 ws.onmessage = (res) => {
     const response = JSON.parse(res.data);
