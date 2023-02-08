@@ -1,6 +1,6 @@
 import WebSocket from "ws";
 import { Client } from "../entities/client";
-import { IClientController, IMessage } from "../interfaces";
+import { IClientController, IMessage, whereClient } from "../interfaces";
 import { clientService } from "../services/client.service";
 import { roomService } from "../services/room.service";
 import { messageCase } from "../interfaces/index";
@@ -41,13 +41,15 @@ class ClientController implements IClientController {
 
     disconnect(ws: WebSocket) {
         const client = clientService.getOneByWs(ws);
-        if (client) {
+        if (client.where === whereClient.inRoomCreating) {
+            client.where = whereClient.inGame;
+        } else {
             const room = roomService.getOneById(client.roomId);
-            room?.playersIds.filter((clientId) => clientId !== client.id);
+            room.playersIds = room.playersIds.filter((clientId) => clientId !== client.id);
             if (room?.playersIds.length == 0) roomService.deleteRoom(room.uuid);
+            console.log(`Server | disconnected client with id: ${client.id}`);
+            clientService.deleteClient(client.id);
         }
-        console.log(`Server | disconnected client with id: ${client.id}`);
-        clientService.deleteClient(client.id);
 
         this.sendAll({ type: messageCase.roomsNames, data: roomController.getRoomsBases() });
     }

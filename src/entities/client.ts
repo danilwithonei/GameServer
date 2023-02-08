@@ -1,6 +1,6 @@
 import { WebSocket } from "ws";
 import { v4 as uuid } from "uuid";
-import { IMessage } from "../interfaces";
+import { IMessage, whereClient } from "../interfaces";
 
 export class Client {
     ws: WebSocket;
@@ -10,12 +10,14 @@ export class Client {
     roomId: string;
     x: number;
     y: number;
+    where: whereClient;
 
     constructor(name: string) {
         this.name = name;
         this.id = uuid();
         this.x = 0;
         this.y = 0;
+        this.where = whereClient.inRoomCreating;
     }
 
     sendSelf(msg: IMessage) {

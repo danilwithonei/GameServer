@@ -13,6 +13,11 @@ export enum messageCase {
     playersPos = "playersPos",
 }
 
+export enum whereClient {
+    inRoomCreating = "inRoomCreating",
+    inGame = "inGame",
+}
+
 export interface IMessage {
     type: messageCase;
     data: any;

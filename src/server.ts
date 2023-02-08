@@ -55,10 +55,6 @@ server.on("connection", (ws) => {
                     }
                 }
                 room.sendAll();
-                // client.setXY(x, y);
-                // console.log(data);
-                // clientController.sendAll({ type: messageCase.playersPos, data: "1" });
-
                 break;
             }
             case "join": {
@@ -75,7 +71,7 @@ server.on("connection", (ws) => {
     });
 
     ws.on("close", () => {
-        // clientController.disconnect(ws);
+        clientController.disconnect(ws);
     });
 });
 
