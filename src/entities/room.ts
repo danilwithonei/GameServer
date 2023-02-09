@@ -1,6 +1,6 @@
 import { v4 as uuid } from "uuid";
 import { clientController } from "../controllers/client.controller";
-import { messageCase } from "../interfaces";
+import { messageCase, PlayerBase } from "../interfaces";
 
 export class Room {
     uuid: string;
@@ -14,10 +14,10 @@ export class Room {
     }
 
     getAllPos() {
-        const allPos = [];
+        const allPos: PlayerBase[] = [];
         for (const clientId of this.playersIds) {
             const client = clientController.getOneById(clientId);
-            allPos.push([client.x, client.y]);
+            allPos.push({ id: client.id, name: client.name, position: client.position });
         }
         return allPos;
     }

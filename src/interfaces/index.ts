@@ -1,10 +1,21 @@
 import { Client } from "../entities/client";
 import { Room } from "../entities/room";
 
+export interface Point {
+    x: number;
+    y: number;
+}
+
 export interface RoomBase {
     name: string;
     id: string;
     playersCount: number;
+}
+
+export interface PlayerBase {
+    id: string;
+    name: string;
+    position: Point;
 }
 
 export enum messageCase {

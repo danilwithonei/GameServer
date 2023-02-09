@@ -1,6 +1,6 @@
 import { WebSocket } from "ws";
 import { v4 as uuid } from "uuid";
-import { IMessage, whereClient } from "../interfaces";
+import { IMessage, whereClient, Point } from "../interfaces";
 
 export class Client {
     ws: WebSocket;
@@ -8,15 +8,13 @@ export class Client {
     id: string;
     roomName: string;
     roomId: string;
-    x: number;
-    y: number;
+    position: Point;
     where: whereClient;
 
     constructor(name: string) {
         this.name = name;
         this.id = uuid();
-        this.x = 1;
-        this.y = 1;
+        this.position = { x: 33, y: 33 };
         this.where = whereClient.inRoomCreating;
     }
 
@@ -32,8 +30,8 @@ export class Client {
     setName(name: string) {
         this.name = name;
     }
-    setXY(x: number, y: number) {
-        this.x = x;
-        this.y = y;
+    setXY(position: Point) {
+        this.position.x = position.x;
+        this.position.y = position.y;
     }
 }
