@@ -4,12 +4,11 @@ import { app } from "./expressServer";
 import { messageCase } from "./interfaces";
 import { clientController } from "./controllers/client.controller";
 import { roomController } from "./controllers/room.controller";
-import { Game } from "./entities/game";
 
 const server = new WebSocket.Server({ port: +socketPort }, () => {
     console.log(`### Server started on port! ${socketPort} ###`);
 });
-const game = new Game();
+
 server.on("connection", (ws) => {
     console.log(`Server | new client connected`);
 
@@ -36,7 +35,7 @@ server.on("connection", (ws) => {
             case "go": {
                 const client = clientController.getOneByWs(ws);
                 const room = roomController.getOneById(client.roomId);
-                game.goTo(client, data);
+                room.goTo(client, data);
                 room.sendAll();
                 break;
             }

@@ -1,4 +1,5 @@
 import fs from "fs";
+import { Bullet } from "../../src/entities/bullet";
 import { PlayerBase } from "../../src/interfaces";
 
 const ws = new WebSocket(
@@ -128,7 +129,7 @@ let mapText = `#################################################################
 ######################################################################################################################################################################
 ######################################################################################################################################################################`;
 
-function setPlayers(allPlayers: PlayerBase[]) {
+function setPlayers(allPlayers: PlayerBase[], bullets: Bullet[]) {
     let mapMatrix = mapText.split("\n");
     const mm: string[] = [];
     const viewRadius = 30;
@@ -138,6 +139,15 @@ function setPlayers(allPlayers: PlayerBase[]) {
             "0" +
             mapMatrix[player.position.y].substring(player.position.x + 1);
     }
+    if (bullets.length !== 0) {
+        for (const bullet of bullets) {
+            mapMatrix[bullet.position.y] =
+                mapMatrix[bullet.position.y].substring(0, bullet.position.x) +
+                "*" +
+                mapMatrix[bullet.position.y].substring(bullet.position.x + 1);
+        }
+    }
+
     for (const player of allPlayers) {
         if (player.id === document.cookie.split("=")[1]) {
             for (const m of mapMatrix.slice(
@@ -153,9 +163,9 @@ function setPlayers(allPlayers: PlayerBase[]) {
     return mm;
 }
 
-function drawMap(allPlayers: PlayerBase[]) {
+function drawMap(allPlayers: PlayerBase[], bullets: Bullet[]) {
     const map = document.getElementById("game-map-div") as HTMLElement;
-    const mapMatrix = setPlayers(allPlayers);
+    const mapMatrix = setPlayers(allPlayers, bullets);
     map.textContent = mapMatrix.join("\n");
 }
 
@@ -172,7 +182,7 @@ function send(data: string) {
 onload = () => {
     const id = document.cookie.split("=")[1];
     send(`setClient_${id}`);
-    drawMap([]);
+    drawMap([], []);
 };
 var keyCode = "none";
 addEventListener("keydown", (e) => {
@@ -189,6 +199,9 @@ addEventListener("keydown", (e) => {
         case 40:
             keyCode = "go_down";
             break;
+        case 32:
+            keyCode = "go_shoot";
+            break;
         default:
             break;
     }
@@ -200,14 +213,19 @@ setInterval(() => {
         keyCode = "none";
     }
 }, 100);
-
+var allPlayers: PlayerBase[] = [];
+var bullets: Bullet[] = [];
 ws.onmessage = (res) => {
     const response = JSON.parse(res.data);
-
     switch (response.type) {
         case "playersPos": {
-            const allPlayers: PlayerBase[] = response.data;
-            drawMap(allPlayers);
+            allPlayers = response.data;
+            drawMap(allPlayers, bullets);
+            break;
+        }
+        case "bullets": {
+            bullets = response.data;
+            drawMap(allPlayers, bullets);
             break;
         }
 

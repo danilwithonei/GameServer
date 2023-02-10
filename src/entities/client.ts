@@ -1,6 +1,6 @@
 import { WebSocket } from "ws";
 import { v4 as uuid } from "uuid";
-import { IMessage, whereClient, Point } from "../interfaces";
+import { IMessage, whereClient, Point, Duration } from "../interfaces";
 
 export class Client {
     ws: WebSocket;
@@ -10,7 +10,7 @@ export class Client {
     roomId: string;
     position: Point;
     where: whereClient;
-
+    duration: Duration = Duration.right;
     constructor(name: string) {
         this.name = name;
         this.id = uuid();

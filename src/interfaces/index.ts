@@ -22,6 +22,15 @@ export enum messageCase {
     clientsNames = "clientsNames",
     roomsNames = "roomsNames",
     playersPos = "playersPos",
+    bullets = "bullets",
+}
+
+export enum Duration {
+    up = "up",
+    right = "right",
+    down = "down",
+    left = "left",
+    shoot = "shoot",
 }
 
 export enum whereClient {
