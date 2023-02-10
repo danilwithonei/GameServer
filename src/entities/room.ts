@@ -136,26 +136,42 @@ export class Room {
         this.playersIds = [];
         this.bullets = [];
         setInterval(() => {
-            if (this.bullets.length !== 0) {
-                for (const bullet of this.bullets) {
-                    if (this.mapMatrix[bullet.position.y][bullet.position.x] !== " ") {
-                        bullet.live = false;
-                    } else {
-                        bullet.go();
+            for (const bullet of this.bullets) {
+                if (this.mapMatrix[bullet.position.y][bullet.position.x] !== " ") {
+                    bullet.live = false;
+                } else {
+                    bullet.go();
+                    for (const playerId of this.playersIds) {
+                        const client = clientController.getOneById(playerId);
+                        if (
+                            bullet.position.x === client.position.x &&
+                            bullet.position.y === client.position.y
+                        ) {
+                            client.hp -= 1;
+                            bullet.live = false;
+                        }
                     }
                 }
-                this.sendAllBullets();
             }
+            // объеденить в одно
+            this.sendAllBullets();
+            this.sendAll();
+
             this.bullets = this.bullets.filter((bullet) => bullet.live === true);
             // console.log(this.bullets.length);
-        }, 100);
+        }, 50);
     }
 
     getAllPos() {
         const allPos: PlayerBase[] = [];
         for (const clientId of this.playersIds) {
             const client = clientController.getOneById(clientId);
-            allPos.push({ id: client.id, name: client.name, position: client.position });
+            allPos.push({
+                id: client.id,
+                name: client.name,
+                position: client.position,
+                hp: client.hp,
+            });
         }
         return allPos;
     }

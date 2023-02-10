@@ -16,6 +16,7 @@ export interface PlayerBase {
     id: string;
     name: string;
     position: Point;
+    hp: number;
 }
 
 export enum messageCase {

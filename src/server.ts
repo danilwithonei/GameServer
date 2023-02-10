@@ -36,7 +36,6 @@ server.on("connection", (ws) => {
                 const client = clientController.getOneByWs(ws);
                 const room = roomController.getOneById(client.roomId);
                 room.goTo(client, data);
-                room.sendAll();
                 break;
             }
             case "join": {

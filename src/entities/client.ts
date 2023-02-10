@@ -11,7 +11,9 @@ export class Client {
     position: Point;
     where: whereClient;
     duration: Duration = Duration.right;
+    hp: number;
     constructor(name: string) {
+        this.hp = 5;
         this.name = name;
         this.id = uuid();
         this.position = { x: 33, y: 33 };

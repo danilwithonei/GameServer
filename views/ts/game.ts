@@ -167,6 +167,9 @@ function drawMap(allPlayers: PlayerBase[], bullets: Bullet[]) {
     const map = document.getElementById("game-map-div") as HTMLElement;
     const mapMatrix = setPlayers(allPlayers, bullets);
     map.textContent = mapMatrix.join("\n");
+    const playerInfo = document.getElementById("player-info") as HTMLElement;
+    const player = allPlayers.filter((player) => player.id === document.cookie.split("=")[1])[0];
+    playerInfo.textContent = `Name: ${player.name}\nHP: ${player.hp}\nX: ${player.position.x}\nY: ${player.position.y}`;
 }
 
 function send(data: string) {
