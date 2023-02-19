@@ -4,6 +4,11 @@ import { app } from "./expressServer";
 import { messageCase } from "./interfaces";
 import { clientController } from "./controllers/client.controller";
 import { roomController } from "./controllers/room.controller";
+import { sequelize } from "./database/dataBase";
+import { UserService } from "./database/user.service";
+import { User } from "./database/models/user";
+
+const userService = new UserService(User);
 
 const server = new WebSocket.Server({ port: +socketPort }, () => {
     console.log(`### Server started on port! ${socketPort} ###`);
@@ -63,3 +68,18 @@ app.listen(expressPort, () => {
         }/ ###`,
     );
 });
+
+try {
+    sequelize
+        .authenticate()
+        .then(async () => {
+            console.log("Соединение с БД было успешно установлено");
+            await sequelize.sync();
+            console.log("Все модели были успешно синхронизированы.");
+            await userService.create({ firstName: "Mikhail" });
+            console.log(await userService.getAll());
+        })
+        .catch((error) => console.error(error));
+} catch (e) {
+    console.log("Невозможно выполнить подключение к БД: ", e);
+}
